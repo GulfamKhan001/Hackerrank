@@ -1,4 +1,6 @@
 const puppeteer = require("puppeteer");
+let { email, password } = require('./secrets');
+
 
 let browserOpenPromise = puppeteer.launch({
     headless: false,
