@@ -1,5 +1,5 @@
 const puppeteer = require("puppeteer");
-let { email, password } = require('./secrets');
+let { email, password } = require('./login');
 
 
 let browserOpenPromise = puppeteer.launch({
@@ -23,4 +23,19 @@ browserOpenPromise.then(function (browser){
 })
 .then(function(data){
     console.log("Login Page opened");
+
+    let emailFilled=cTab.type("#input-1",email);
+    return emailFilled;
+})
+.then(function(){
+    console.log("Email Typed");
+
+    let passwordFilled=cTab.type("#input-2",password);
+    return passwordFilled;
+})
+.then(function(){
+    console.log("Password Typed");
+})
+.catch(function(err){
+    console.log(err);
 })
