@@ -6,7 +6,7 @@ let browserOpenPromise = puppeteer.launch({
     headless: false,
     defaultViewport : null,
     args: ["--start-maximized"],
-    //  executablePath: "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+    //  executablePath: chrome:/version
 });
 
 browserOpenPromise.then(function (browser){
@@ -42,12 +42,12 @@ browserOpenPromise.then(function (browser){
 .then(function(){
     console.log("Page Logined");
 
-    let completePage=waitAndClick(".nav-link.contests");// Wait for Page to load fully and then click
+    let completePage=waitAndClick('div[data-automation="algorithms"]');// Wait for Page to load fully and then click
     // { delay: 10000 }
     return completePage
 })
 .then(function(){
-    console.log("Complete Page Reached");
+    console.log("Algorithm Page Reached");
 })
 .catch(function(err){
     console.log(err);
@@ -60,6 +60,10 @@ function waitAndClick(selector){
         waitForbutton.then(function (){
             let clickpromise= cTab.click(selector);
             return clickpromise;
+        })
+        .then(function(){
+            console.log("Algo button Clicked");
+            resolve();
         })
         .catch(function(err){
             console.log(err);
