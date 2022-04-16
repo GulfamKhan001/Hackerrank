@@ -127,9 +127,11 @@ function questionSolver(url, idx) {
           return waitForTextBoxPromise;
         })
         .then(function () {
-          let codeWillBeTypedPromise = cTab.type(".custominput", answer[idx], {
-            delay: 100,
-          });
+          let codeWillBeTypedPromise = cTab.type(".custominput", answer[idx]
+        //   , {
+        //     delay: 100,
+        //   }
+          );
           return codeWillBeTypedPromise;
         })
         .then(function () {
