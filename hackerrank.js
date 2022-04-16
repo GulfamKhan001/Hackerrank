@@ -42,12 +42,32 @@ browserOpenPromise.then(function (browser){
 .then(function(){
     console.log("Page Logined");
 
-    let completePage=waitAndClick('div[data-automation="algorithms"]');// Wait for Page to load fully and then click
+    let completePage=waitAndClick('div[data-automation="algorithms"]');   // Wait for Page to load fully and then click
     // { delay: 10000 }
-    return completePage
+    return completePage;
 })
 .then(function(){
     console.log("Algorithm Page Reached");
+
+    let allQuestions=cTab.waitForSelector('a[data-analytics="ChallengeListChallengeName"]');
+    return allQuestions;
+})
+.then(function(){
+    function getAllQuesLinks() {
+        let allElemArr = document.querySelectorAll(
+          'a[data-analytics="ChallengeListChallengeName"]'
+        );
+        let linksArr = [];
+        for (let i = 0; i < allElemArr.length; i++) {
+          linksArr.push(allElemArr[i].getAttribute("href"));
+        }
+        return linksArr;
+      }
+      let linksArrPromise = cTab.evaluate(getAllQuesLinks);
+      return linksArrPromise;
+})
+.then(function (linksArr) {
+    console.log("links to all ques received");
 })
 .catch(function(err){
     console.log(err);
@@ -67,6 +87,7 @@ function waitAndClick(selector){
         })
         .catch(function(err){
             console.log(err);
+            reject();
         });
     });
     return myPromise;
